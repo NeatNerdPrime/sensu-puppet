@@ -9,6 +9,7 @@ describe 'sensu::backend class', unless: RSpec.configuration.sensu_cluster do
       class { '::sensu::backend':
         password     => 'supersecret',
         old_password => 'P@ssw0rd!',
+        service_env_vars => { 'SENSU_BACKEND_AGENT_PORT' => '9081' },
       }
       EOS
 
@@ -31,6 +32,9 @@ describe 'sensu::backend class', unless: RSpec.configuration.sensu_cluster do
     end
     describe package('sensu-go-agent'), :node => node do
       it { should_not be_installed }
+    end
+    describe port(9081), :node => node do
+      it { should be_listening }
     end
   end
 

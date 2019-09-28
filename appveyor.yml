@@ -32,6 +32,7 @@ install:
 - puppet --version
 - puppet module install puppetlabs-stdlib
 - puppet module install puppet-archive
+- puppet module install puppet-windows_env
 - puppet config set --section main certname sensu_agent
 - facter -p --debug
 - ruby -v

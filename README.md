@@ -3,6 +3,7 @@
 #### Table of Contents
 
 1. [Module Description](#module-description)
+    * [Updating this module from 3.x to 4.x](#updating-this-module-from-3x-to-4x)
 2. [Setup - The basics of getting started with sensu](#setup)
     * [What sensu affects](#what-sensu-affects)
     * [Setup requirements](#setup-requirements)
@@ -56,6 +57,30 @@ Please log an issue if you identify any incompatibilities.
 Sensu Go 5.x is a rewrite of Sensu and no longer depends on redis and rabbitmq. Version 3 of this module supports Sensu Go 5.x.
 
 Users wishing to use the old v2 Puppet module to support previous Ruby based Sensu should use [sensu/sensuclassic](https://forge.puppet.com/sensu/sensuclassic).
+
+### Updating this module from 3.x to 4.x
+
+Class parameter changes:
+
+* Remove `sensu::backend::cli_package_name`, use `sensu::cli::package_name`
+* Remove `sensu::backend::sensuctl_chunk_size`, use `sensu::cli::sensuctl_chunk_size`
+* Move `sensu::backend::url_host` to `sensu::api_host`
+* Move `sensu::backend::url_port` to `sensu::api_port`
+* Move `sensu::backend::password` to `sensu::password`
+* Move `sensu::backend::old_password` to `sensu::old_password`
+
+Type property changes:
+
+* Replace `sensu_check` `proxy_requests*` properties with `proxy_requests`
+* Replace `sensu_entity` `deregistration_handler` with `deregistration`
+* Replace `sensu_handler` `socket_*` properties with `socket`
+* Refactor `sensu_ldap_auth` and `sensu_ad_auth` on how properties are defined.
+  * Move `server_binding`, `server_group_search` and `server_user_search` into `servers` property
+
+Breaking changes:
+
+* Remove `sensu_event` type, replaced with `sensu::event` Bolt task
+* Remove `sensu_silenced` type, replaced with `sensu::silenced` Bolt task
 
 ## Setup
 
